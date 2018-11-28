@@ -59,6 +59,12 @@ class Tokenizer(object):
                 self.idx2word[self.idx] = word
                 self.idx += 1
 
+        with open('word2idx.picke', 'wb') as f:
+            pickle.dump(self.word2idx, f)
+
+        with open('idxword.pickle', 'wb') as f:
+            pickle.dump(self.idx2word, f)
+
     @staticmethod
     def pad_sequence(sequence, maxlen, dtype='int64', padding='pre', truncating='pre', value=0.):
         x = (np.ones(maxlen) * value).astype(dtype)

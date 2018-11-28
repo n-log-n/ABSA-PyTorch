@@ -74,6 +74,8 @@ class Instructor:
                     print('loss: {:.4f}, acc: {:.4f}, test_acc: {:.4f}'.format(loss.item(), train_acc, test_acc))
 
         writer.close()
+        torch.save(self.model.state_dict(), "%s.torch" % self.opt.model_name)
+
         return max_test_acc
 
     def _evaluate_acc(self):
@@ -126,6 +128,8 @@ if __name__ == '__main__':
     parser.add_argument('--polarities_dim', default=3, type=int)
     parser.add_argument('--hops', default=3, type=int)
     parser.add_argument('--device', default=None, type=str)
+    parser.add_argument('--eval', action='store_true')
+    parser.add_argument('--model_file', default='ian.torch', type=str)
     opt = parser.parse_args()
 
     model_classes = {
@@ -166,4 +170,5 @@ if __name__ == '__main__':
         if opt.device is None else torch.device(opt.device)
 
     ins = Instructor(opt)
+
     ins.run()
